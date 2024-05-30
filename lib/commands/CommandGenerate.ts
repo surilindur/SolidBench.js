@@ -1,5 +1,5 @@
 import type { Argv } from 'yargs';
-import { Generator } from '../Generator';
+import { GeneratorLdbcSnb } from '../generators/GeneratorLdbcSnb';
 import { Templates } from '../Templates';
 
 export const command = 'generate';
@@ -60,7 +60,7 @@ export const builder = (yargs: Argv<any>): Argv<any> =>
       },
     })
     .choices('scale', [ 0.1, 1, 3, 10, 30, 100, 300, 1_000 ]);
-export const handler = (argv: Record<string, any>): Promise<void> => new Generator({
+export const handler = (argv: Record<string, any>): Promise<void> => new GeneratorLdbcSnb({
   verbose: argv.verbose,
   cwd: argv.cwd,
   overwrite: argv.overwrite,
