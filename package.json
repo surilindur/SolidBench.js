@@ -44,14 +44,15 @@
   },
   "dependencies": {
     "@types/dockerode": "^3.0.0",
+    "@types/dockerode-compose": "^1.0.0",
     "@types/unzipper": "^0.10.0",
     "dockerode": "^4.0.0",
-    "glob": "^10.0.0",
+    "dockerode-compose": "^1.0.0",
     "ldbc-snb-enhancer": "^2.5.0",
     "ldbc-snb-validation-generator": "^1.1.0",
     "rdf-dataset-fragmenter": "../rdf-dataset-fragmenter.js",
     "sparql-query-parameter-instantiator": "^2.6.0",
-    "unzipper": "^0.10.0",
+    "unzipper": "^0.11.0",
     "yargs": "^17.0.0"
   },
   "devDependencies": {

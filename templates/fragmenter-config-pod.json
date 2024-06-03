@@ -33,17 +33,17 @@
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://www.ldbc.eu",
-      "replacementString": "http://localhost:3000/www.ldbc.eu"
+      "replacementString": "http://localhost:3001/www.ldbc.eu"
     },
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://dbpedia.org",
-      "replacementString": "http://localhost:3000/dbpedia.org"
+      "replacementString": "http://localhost:3002/dbpedia.org"
     },
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://www.w3.org/2002/07/owl",
-      "replacementString": "http://localhost:3000/www.w3.org/2002/07/owl"
+      "replacementString": "http://localhost:3003/www.w3.org/2002/07/owl"
     },
     {
       "@type": "QuadTransformerReplaceIri",
@@ -451,8 +451,7 @@
           ]
         }
       ]
-    },
-    {}
+    }
   ],
   "fragmentationStrategy": {
     "@type": "FragmentationStrategyComposite",
@@ -472,10 +471,7 @@
         "outputFormat": "application/n-quads",
         "fileExtension": ".nq",
         "iriToPath": {
-          "^http:\\/\\/www.w3.org": "out-fragments/http/www.w3.org",
-          "^http:\\/\\/localhost:3001\\/dbpedia\\.org.*": "out-fragments/http/localhost_3001/dbpedia",
-          "^http:\\/\\/localhost:3000": "out-fragments/http/localhost_3000",
-          "^https:\\/\\/localhost:3000": "out-fragments/https/localhost_3000"
+          "^http:\\/\\/": "out-fragments/http/"
         }
       },
       {

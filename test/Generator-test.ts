@@ -119,6 +119,7 @@ describe('Generator', () => {
       scale: '0.1',
       enhancementConfig: 'enhancementConfig',
       fragmentConfig: 'fragmentConfig',
+      enhancementFragmentConfig: 'enhancementFragmentConfig',
       queryConfig: 'queryConfig',
       validationParams: 'validationParams',
       validationConfig: 'validationConfig',
@@ -156,6 +157,7 @@ describe('Generator', () => {
         scale: '0.1',
         enhancementConfig: 'enhancementConfig',
         fragmentConfig: 'fragmentConfig',
+        enhancementFragmentConfig: 'enhancementFragmentConfig',
         queryConfig: 'queryConfig',
         validationParams: 'validationParams',
         validationConfig: 'validationConfig',
@@ -252,6 +254,7 @@ describe('Generator', () => {
       await generator.fragmentSnbDataset();
 
       expect(runFragmenter).toHaveBeenCalledWith('fragmentConfig', { mainModulePath });
+      expect(runFragmenter).toHaveBeenCalledWith('enhancementFragmentConfig', { mainModulePath });
     });
   });
 
@@ -283,6 +286,7 @@ describe('Generator', () => {
         expect(container.start).toHaveBeenCalledTimes(1);
         expect(runEnhancer).toHaveBeenCalledWith('enhancementConfig', { mainModulePath });
         expect(runFragmenter).toHaveBeenCalledWith('fragmentConfig', { mainModulePath });
+        expect(runFragmenter).toHaveBeenCalledWith('enhancementFragmentConfig', { mainModulePath });
         expect(runQueryInstantiator)
           .toHaveBeenCalledWith('queryConfig', { mainModulePath }, { variables: expect.anything() });
         expect(runValidationGenerator)
@@ -301,6 +305,7 @@ describe('Generator', () => {
         expect(container.start).toHaveBeenCalledTimes(1);
         expect(runEnhancer).toHaveBeenCalledWith('enhancementConfig', { mainModulePath });
         expect(runFragmenter).toHaveBeenCalledWith('fragmentConfig', { mainModulePath });
+        expect(runFragmenter).toHaveBeenCalledWith('enhancementFragmentConfig', { mainModulePath });
         expect(runQueryInstantiator)
           .toHaveBeenCalledWith('queryConfig', { mainModulePath }, { variables: expect.anything() });
         expect(runValidationGenerator)
@@ -317,6 +322,7 @@ describe('Generator', () => {
           scale: '0.1',
           enhancementConfig: 'enhancementConfig',
           fragmentConfig: 'fragmentConfig',
+          enhancementFragmentConfig: 'enhancementFragmentConfig',
           queryConfig: 'queryConfig',
           validationParams: 'validationParams',
           validationConfig: 'validationConfig',
@@ -330,6 +336,7 @@ describe('Generator', () => {
         expect(container.start).toHaveBeenCalledTimes(1);
         expect(runEnhancer).toHaveBeenCalledWith('enhancementConfig', { mainModulePath });
         expect(runFragmenter).toHaveBeenCalledWith('fragmentConfig', { mainModulePath });
+        expect(runFragmenter).toHaveBeenCalledWith('enhancementFragmentConfig', { mainModulePath });
         expect(runQueryInstantiator)
           .toHaveBeenCalledWith('queryConfig', { mainModulePath }, { variables: expect.anything() });
         expect(runValidationGenerator)
