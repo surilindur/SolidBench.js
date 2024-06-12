@@ -1,71 +1,45 @@
-import { join } from 'node:path';
+import Dockerode from 'dockerode';
+import DockerodeCompose from 'dockerode-compose';
 import { Server } from '../lib/Server';
 
-const run = jest.fn();
+const mockPull = jest.fn();
+const mockUp = jest.fn();
+const mockDown = jest.fn();
 
-jest.mock<typeof import('@solid/community-server')>('@solid/community-server', () => <any> ({
-  AppRunner: jest.fn().mockImplementation(() => ({
-    run,
-  })),
-}));
+jest.mock('dockerode');
+jest.mock<typeof import('dockerode-compose')>('dockerode-compose', () => jest.fn().mockImplementation(() => ({
+  pull: mockPull,
+  up: mockUp,
+  down: mockDown,
+})));
 
 describe('Server', () => {
-  let server: Server;
-  let baseUrl: string;
+  const cwd = 'CWD';
+  const name = 'SOLIDBENCH';
+  const config = 'CONFIG';
 
-  const configPath = 'CONFIG';
-  const port = 3_000;
-  const logLevel = 'info';
-  const rootFilePath = 'out-fragments/http/localhost_3000/';
+  let server: Server;
 
   beforeEach(() => {
-    run.mockReset();
+    mockPull.mockReset();
+    mockDown.mockReset();
+    mockUp.mockReset();
+    server = new Server({ cwd, name, config });
   });
 
-  it('calls serve', async() => {
-    server = new Server({ configPath, port, logLevel, baseUrl, rootFilePath });
-    await server.serve();
-    expect(run).toHaveBeenCalledWith(
-      {
-        loaderProperties: {
-          mainModulePath: join(__dirname, '..'),
-          typeChecking: false,
-          logLevel,
-        },
-        config: configPath,
-        variableBindings: {
-          'urn:solid-server:default:variable:baseUrl': 'http://localhost:3000/',
-          'urn:solid-server:default:variable:loggingLevel': logLevel,
-          'urn:solid-server:default:variable:port': port,
-          'urn:solid-server:default:variable:rootFilePath': rootFilePath,
-          'urn:solid-server:default:variable:seededPodConfigJson': '',
-          'urn:solid-server:default:variable:showStackTrace': false,
-        },
-      },
-    );
+  it('calls Dockerode and DockerodeCompose when created', async() => {
+    expect(Dockerode).toHaveBeenCalledTimes(1);
+    expect(DockerodeCompose).toHaveBeenCalledTimes(1);
   });
 
-  it('calls serve with baseUrl defined', async() => {
-    baseUrl = 'http://localhost:1234/';
-    server = new Server({ configPath, port, logLevel, baseUrl, rootFilePath });
-    await server.serve();
-    expect(run).toHaveBeenCalledWith(
-      {
-        loaderProperties: {
-          mainModulePath: join(__dirname, '..'),
-          typeChecking: false,
-          logLevel,
-        },
-        config: configPath,
-        variableBindings: {
-          'urn:solid-server:default:variable:baseUrl': baseUrl,
-          'urn:solid-server:default:variable:loggingLevel': logLevel,
-          'urn:solid-server:default:variable:port': port,
-          'urn:solid-server:default:variable:rootFilePath': rootFilePath,
-          'urn:solid-server:default:variable:seededPodConfigJson': '',
-          'urn:solid-server:default:variable:showStackTrace': false,
-        },
-      },
-    );
+  it('calls dockerode-compose pull and up', async() => {
+    await server.start();
+    expect(mockPull).toHaveBeenCalledTimes(1);
+    expect(mockUp).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls dockerode-compose down', async() => {
+    await server.stop();
+    expect(mockDown).toHaveBeenCalledTimes(1);
   });
 });

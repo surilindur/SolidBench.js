@@ -7,44 +7,36 @@ import { runConfig as runValidationGenerator } from 'ldbc-snb-validation-generat
 import { runConfig as runFragmenter } from 'rdf-dataset-fragmenter';
 import { runConfig as runQueryInstantiator } from 'sparql-query-parameter-instantiator';
 import { Extract } from 'unzipper';
+import { Module, type IModuleOptions } from './Module';
 
 /**
  * Generates decentralized social network data in different phases.
  */
-export class Generator {
-  public static readonly COLOR_RESET: string = '\u001B[0m';
-  public static readonly COLOR_RED: string = '\u001B[31m';
-  public static readonly COLOR_GREEN: string = '\u001B[32m';
-  public static readonly COLOR_YELLOW: string = '\u001B[33m';
-  public static readonly COLOR_BLUE: string = '\u001B[34m';
-  public static readonly COLOR_MAGENTA: string = '\u001B[35m';
-  public static readonly COLOR_CYAN: string = '\u001B[36m';
-  public static readonly COLOR_GRAY: string = '\u001B[90m';
+export class Generator extends Module {
   public static readonly LDBC_SNB_DATAGEN_DOCKER_IMAGE: string = 'rubensworks/ldbc_snb_datagen:latest';
 
-  private readonly cwd: string;
-  private readonly verbose: boolean;
-  private readonly overwrite: boolean;
-  private readonly scale: string;
-  private readonly enhancementConfig: string;
-  private readonly fragmentConfig: string;
-  private readonly queryConfig: string;
-  private readonly validationParams: string;
-  private readonly validationConfig: string;
-  private readonly hadoopMemory: string;
-  private readonly mainModulePath: string;
+  protected readonly verbose: boolean;
+  protected readonly overwrite: boolean;
+  protected readonly scale: string;
+  protected readonly enhancementConfig: string;
+  protected readonly fragmentConfig: string;
+  protected readonly queryConfig: string;
+  protected readonly validationParams: string;
+  protected readonly validationConfig: string;
+  protected readonly hadoopMemory: string;
+  protected readonly mainModulePath: string;
 
-  public constructor(opts: IGeneratorOptions) {
-    this.cwd = opts.cwd;
-    this.verbose = opts.verbose;
-    this.overwrite = opts.overwrite;
-    this.scale = opts.scale;
-    this.enhancementConfig = opts.enhancementConfig;
-    this.fragmentConfig = opts.fragmentConfig;
-    this.queryConfig = opts.queryConfig;
-    this.validationParams = opts.validationParams;
-    this.validationConfig = opts.validationConfig;
-    this.hadoopMemory = opts.hadoopMemory;
+  public constructor(options: IGeneratorOptions) {
+    super(options);
+    this.verbose = options.verbose;
+    this.overwrite = options.overwrite;
+    this.scale = options.scale;
+    this.enhancementConfig = options.enhancementConfig;
+    this.fragmentConfig = options.fragmentConfig;
+    this.queryConfig = options.queryConfig;
+    this.validationParams = options.validationParams;
+    this.validationConfig = options.validationConfig;
+    this.hadoopMemory = options.hadoopMemory;
     this.mainModulePath = join(__dirname, '..');
   }
 
@@ -55,10 +47,6 @@ export class Generator {
     } catch {
       return false;
     }
-  }
-
-  protected log(phase: string, status: string): void {
-    process.stdout.write(`${Generator.withColor(`[${phase}]`, Generator.COLOR_CYAN)} ${status}\n`);
   }
 
   protected async runPhase(name: string, directory: string, runner: () => Promise<void>): Promise<void> {
@@ -240,19 +228,9 @@ export class Generator {
     return Object.fromEntries((await readdir(join(__dirname, '../templates/queries/')))
       .map(name => [ `urn:variables:query-templates:${name}`, join(__dirname, `../templates/queries/${name}`) ]));
   }
-
-  /**
-   * Return a string in a given color
-   * @param str The string that should be printed in
-   * @param color A given color
-   */
-  public static withColor(str: any, color: string): string {
-    return `${color}${str}${Generator.COLOR_RESET}`;
-  }
 }
 
-export interface IGeneratorOptions {
-  cwd: string;
+export interface IGeneratorOptions extends IModuleOptions {
   verbose: boolean;
   overwrite: boolean;
   scale: string;

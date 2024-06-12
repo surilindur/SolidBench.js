@@ -14,5 +14,16 @@ export const builder = (yargs: Argv<any>): Argv<any> =>
         default: Templates.COMPOSE_CONFIG,
         defaultDescription: 'endpoints.yaml',
       },
+      name: {
+        type: 'string',
+        alias: 'n',
+        describe: 'Name of the Docker compose setup',
+        default: 'solidbench',
+        defaultDescription: 'solidbench',
+      },
     });
-export const handler = async(argv: Record<string, any>): Promise<void> => new Server({ config: argv.config }).serve();
+export const handler = async(argv: Record<string, any>): Promise<void> => new Server({
+  cwd: argv.cwd,
+  name: argv.name,
+  config: argv.config,
+}).serve();

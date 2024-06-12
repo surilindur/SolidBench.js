@@ -1,9 +1,45 @@
 services:
-  solid:
+  pods:
     image: solidproject/community-server:7
+    environment:
+      CSS_LOGGING_LEVEL: info
+      CSS_CONFIG: /tmp/config.json
+      CSS_PORT: 3000
+    network_mode: host
     ports:
       - 3000:3000
-  sparql:
-    image: comunica/query-sparql-file:latest
+    volumes:
+      - ./server-config.json:/tmp/config.json:ro
+      - ./../out-fragments/http/localhost_3000:/data:ro
+  ldbc:
+    image: solidproject/community-server:7
+    environment:
+      CSS_LOGGING_LEVEL: info
+      CSS_CONFIG: /tmp/config.json
+      CSS_PORT: 3001
+    network_mode: host
     ports:
       - 3001:3001
+    volumes:
+      - ./server-config.json:/tmp/config.json:ro
+      - ./../out-fragments/http/localhost_3001:/data:ro
+  dbpedia:
+    image: solidproject/community-server:7
+    environment:
+      CSS_LOGGING_LEVEL: info
+      CSS_CONFIG: /tmp/config.json
+      CSS_PORT: 3002
+    network_mode: host
+    ports:
+      - 3002:3002
+    volumes:
+      - ./server-config.json:/tmp/config.json:ro
+      - ./../out-fragments/http/localhost_3002:/data:ro
+  sparql:
+    image: comunica/query-sparql-file:latest
+    entrypoint: node ./bin/http.js
+    command: --context /tmp/context.json --port 3004 --workers 1
+    network_mode: host
+    volumes:
+      - ./../out-fragments/http/localhost_3004/data.nq:/tmp/data.nq:ro
+      - ./engine-context.json:/tmp/context.json:ro

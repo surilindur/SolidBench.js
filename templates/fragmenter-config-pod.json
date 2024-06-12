@@ -47,7 +47,7 @@
     },
     {
       "@type": "QuadTransformerReplaceIri",
-      "searchRegex": "^http://localhost:3000/www.ldbc.eu/ldbc_socialnet/1.0/data/pers([0-9]*)$",
+      "searchRegex": "^http://localhost:3001/www.ldbc.eu/ldbc_socialnet/1.0/data/pers([0-9]*)$",
       "replacementString": "http://localhost:3000/pods/$1/profile/card#me"
     },
     {
@@ -66,8 +66,9 @@
     {
       "@type": "QuadTransformerAppendQuad",
       "matcher": {
-        "@type": "QuadMatcherPredicate",
-        "predicateRegex": "vocabulary/containerOf$"
+        "@type": "QuadMatcherComponent",
+        "component": "predicate",
+        "regex": "vocabulary/containerOf$"
       },
       "subject": {
         "@type": "TermTemplateQuadComponent",
@@ -100,8 +101,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/postsFragmentation",
@@ -138,8 +140,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/postsFragmentation",
@@ -176,8 +179,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/postsFragmentation",
@@ -226,8 +230,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/postsFragmentation",
@@ -283,8 +288,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/commentsFragmentation",
@@ -321,8 +327,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/commentsFragmentation",
@@ -359,8 +366,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/commentsFragmentation",
@@ -409,8 +417,9 @@
               "transformer": {
                 "@type": "QuadTransformerAppendQuadLink",
                 "matcher": {
-                  "@type": "QuadMatcherPredicate",
-                  "predicateRegex": "vocabulary/hasCreator$"
+                  "@type": "QuadMatcherComponent",
+                  "component": "predicate",
+                  "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
                 "predicate": "http://localhost:3000/internal/commentsFragmentation",
@@ -451,6 +460,33 @@
           ]
         }
       ]
+    },
+    {
+      "@type": "QuadTransformerReplaceQuad",
+      "matcher": {
+        "@type": "QuadMatcherComponent",
+        "component": "subject",
+        "regex": "^http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/",
+        "probability": 0.2
+      },
+      "subject": {
+        "@type": "TermTemplateQuadComponent",
+        "component": "subject"
+      },
+      "predicate": {
+        "@type": "TermTemplateQuadComponent",
+        "component": "predicate"
+      },
+      "object": {
+        "@type": "TermTemplateQuadComponent",
+        "component": "object"
+      },
+      "graph": {
+        "@type": "TermTemplateRegexNamedNode",
+        "component": "subject",
+        "regex": "^(http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/).*",
+        "replacement": "$1"
+      }
     }
   ],
   "fragmentationStrategy": {
@@ -472,6 +508,23 @@
         "fileExtension": ".nq",
         "iriToPath": {
           "^http:\\/\\/": "out-fragments/http/"
+        }
+      },
+      {
+        "@type": "QuadSinkFiltered",
+        "filter": {
+          "@type": "QuadMatcherComponent",
+          "component": "graph",
+          "regex": "^http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/"
+        },
+        "sink": {
+          "@type": "QuadSinkFile",
+          "log": false,
+          "outputFormat": "application/n-quads",
+          "fileExtension": ".nq",
+          "iriToPath": {
+            "^.*": "out-fragments/http/localhost_3004/data"
+          }
         }
       },
       {
