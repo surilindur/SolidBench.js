@@ -629,7 +629,7 @@
           "@type": "QuadSinkFile",
           "log": false,
           "outputFormat": "application/n-quads",
-          "fileExtension": "$.nq",
+          "fileExtension": ".nq",
           "iriToPath": {
             "^.*": "out-fragments/https/sparql.solidbench.eriador.io/data"
           }
