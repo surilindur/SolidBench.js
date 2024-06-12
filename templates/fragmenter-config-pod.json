@@ -462,6 +462,7 @@
       ]
     },
     {
+      "comment": "add pod URI as graph URI to 20% of the Solid pods",
       "@type": "QuadTransformerReplaceQuad",
       "matcher": {
         "@type": "QuadMatcherComponent",
@@ -487,6 +488,87 @@
         "regex": "^(https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/).*",
         "replacement": "$1"
       }
+    },
+    {
+      "@type": "QuadTransformerDistinct",
+      "transformer": {
+        "@type": "QuadTransformerAppendQuad",
+        "matcher": {
+          "@type": "QuadMatcherComponent",
+          "component": "graph",
+          "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/"
+        },
+        "subject": {
+          "@type": "TermTemplateQuadComponent",
+          "component": "graph"
+        },
+        "predicate": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
+        },
+        "object": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "http://rdfs.org/ns/void#Dataset"
+        },
+        "graph": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": ""
+        }
+      }
+    },
+    {
+      "@type": "QuadTransformerDistinct",
+      "transformer": {
+        "@type": "QuadTransformerAppendQuad",
+        "matcher": {
+          "@type": "QuadMatcherComponent",
+          "component": "graph",
+          "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/"
+        },
+        "subject": {
+          "@type": "TermTemplateQuadComponent",
+          "component": "graph"
+        },
+        "predicate": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "http://rdfs.org/ns/void#feature"
+        },
+        "object": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "http://www.w3.org/ns/formats/N-Triples"
+        },
+        "graph": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": ""
+        }
+      }
+    },
+    {
+      "@type": "QuadTransformerDistinct",
+      "transformer": {
+        "@type": "QuadTransformerAppendQuad",
+        "matcher": {
+          "@type": "QuadMatcherComponent",
+          "component": "graph",
+          "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/"
+        },
+        "subject": {
+          "@type": "TermTemplateQuadComponent",
+          "component": "graph"
+        },
+        "predicate": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "http://rdfs.org/ns/void#sparqlEndpoint"
+        },
+        "object": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": "https://sparql.solidbench.eriador.io/sparql"
+        },
+        "graph": {
+          "@type": "TermTemplateStaticNamedNode",
+          "value": ""
+        }
+      }
     }
   ],
   "fragmentationStrategy": {
@@ -502,13 +584,38 @@
     "@type": "QuadSinkComposite",
     "sinks": [
       {
-        "@type": "QuadSinkFile",
-        "log": true,
-        "outputFormat": "application/n-quads",
-        "fileExtension": "$.nq",
-        "iriToPath": {
-          "^http:\\/\\/": "out-fragments/http/",
-          "^https:\\/\\/": "out-fragments/https/"
+        "@type": "QuadSinkFiltered",
+        "filter": {
+          "@type": "QuadMatcherComponent",
+          "component": "graph",
+          "regex": "^$"
+        },
+        "sink": {
+          "@type": "QuadSinkFile",
+          "log": true,
+          "outputFormat": "application/n-triples",
+          "fileExtension": "$.nt",
+          "iriToPath": {
+            "^http:\\/\\/": "out-fragments/http/",
+            "^https:\\/\\/": "out-fragments/https/"
+          }
+        }
+      },
+      {
+        "@type": "QuadSinkFiltered",
+        "filter": {
+          "@type": "QuadMatcherComponent",
+          "component": "subject",
+          "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/$"
+        },
+        "sink": {
+          "@type": "QuadSinkFile",
+          "log": false,
+          "outputFormat": "application/n-triples",
+          "fileExtension": ".meta",
+          "iriToPath": {
+            "^https:\\/\\/": "out-fragments/https/"
+          }
         }
       },
       {
