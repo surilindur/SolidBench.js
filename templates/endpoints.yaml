@@ -7,8 +7,6 @@ services:
       CSS_PORT: 3000
       CSS_BASE_URL: https://pods.solidbench.eriador.io
     network_mode: host
-    ports:
-      - 3000:3000
     volumes:
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/pods.solidbench.eriador.io:/data:ro
@@ -20,8 +18,6 @@ services:
       CSS_PORT: 3001
       CSS_BASE_URL: https://ldbc.solidbench.eriador.io
     network_mode: host
-    ports:
-      - 3001:3001
     volumes:
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/ldbc.solidbench.eriador.io:/data:ro
@@ -33,16 +29,17 @@ services:
       CSS_PORT: 3002
       CSS_BASE_URL: https://dbpedia.solidbench.eriador.io
     network_mode: host
-    ports:
-      - 3002:3002
     volumes:
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/dbpedia.solidbench.eriador.io:/data:ro
-#  sparql:
-#    image: comunica/query-sparql-file:latest
-#    entrypoint: node ./bin/http.js
-#    command: --context /tmp/context.json --port 3004 --workers 1
-#    network_mode: host
-#    volumes:
-#      - ./../out-fragments/http/localhost_3004/data.nq:/tmp/data.nq:ro
-#      - ./engine-context.json:/tmp/context.json:ro
+  sparql:
+    build:
+      context: .
+      network: host
+      dockerfile: comunica.dockerfile
+    entrypoint: node ./bin/http.js
+    command: --context /tmp/context.json --port 3003 --workers 1 --timeout 30
+    network_mode: host
+    volumes:
+      - ./../out-fragments/https/sparql.solidbench.eriador.io/data.nq:/opt/client/data.nq:ro
+      - ./engine-context.json:/tmp/context.json:ro

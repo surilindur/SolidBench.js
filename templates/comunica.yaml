@@ -1,9 +1,0 @@
-services:
-  sparql:
-    image: comunica/query-sparql-file:latest
-    entrypoint: node ./bin/http.js
-    command: --context /tmp/context.json
-    network_mode: host
-    volumes:
-      - ./../out-fragments/http/localhost_3004/data.nq:/tmp/data.nq:ro
-      - ./engine-context.json:/tmp/context.json:ro
