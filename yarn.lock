@@ -5201,7 +5201,7 @@ rdf-data-factory@^1.0.1, rdf-data-factory@^1.1.0, rdf-data-factory@^1.1.2:
   dependencies:
     "@rdfjs/types" "*"
 
-rdf-dataset-fragmenter@../rdf-dataset-fragmenter.js:
+rdf-dataset-fragmenter@../rdf-dataset-fragmenter:
   version "2.7.1"
   dependencies:
     "@rdfjs/types" "*"

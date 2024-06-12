@@ -33,22 +33,22 @@
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://www.ldbc.eu",
-      "replacementString": "http://localhost:3001/www.ldbc.eu"
+      "replacementString": "https://ldbc.solidbench.eriador.io"
     },
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://dbpedia.org",
-      "replacementString": "http://localhost:3002/dbpedia.org"
+      "replacementString": "https://dbpedia.solidbench.eriador.io"
     },
     {
       "@type": "QuadTransformerReplaceIri",
       "searchRegex": "^http://www.w3.org/2002/07/owl",
-      "replacementString": "http://localhost:3003/www.w3.org/2002/07/owl"
+      "replacementString": "https://w3.solidbench.eriador.io/2002/07/owl"
     },
     {
       "@type": "QuadTransformerReplaceIri",
-      "searchRegex": "^http://localhost:3001/www.ldbc.eu/ldbc_socialnet/1.0/data/pers([0-9]*)$",
-      "replacementString": "http://localhost:3000/pods/$1/profile/card#me"
+      "searchRegex": "^https://ldbc.solidbench.eriador.io/ldbc_socialnet/1.0/data/pers([0-9]*)$",
+      "replacementString": "https://pods.solidbench.eriador.io/$1/profile/card#me"
     },
     {
       "@type": "QuadTransformerRemapResourceIdentifier",
@@ -106,8 +106,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/postsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationPerResource"
+                "predicate": "https://solidbench.eriador.io/internal/postsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationPerResource"
               }
             },
             {
@@ -145,8 +145,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/postsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationOneFile"
+                "predicate": "https://solidbench.eriador.io/internal/postsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationOneFile"
               }
             },
             {
@@ -184,8 +184,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/postsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationLocation"
+                "predicate": "https://solidbench.eriador.io/internal/postsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationLocation"
               }
             },
             {
@@ -235,8 +235,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/postsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationCreationDate"
+                "predicate": "https://solidbench.eriador.io/internal/postsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationCreationDate"
               }
             },
             {
@@ -293,8 +293,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/commentsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationPerResource"
+                "predicate": "https://solidbench.eriador.io/internal/commentsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationPerResource"
               }
             },
             {
@@ -332,8 +332,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/commentsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationOneFile"
+                "predicate": "https://solidbench.eriador.io/internal/commentsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationOneFile"
               }
             },
             {
@@ -371,8 +371,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/commentsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationLocation"
+                "predicate": "https://solidbench.eriador.io/internal/commentsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationLocation"
               }
             },
             {
@@ -422,8 +422,8 @@
                   "regex": "vocabulary/hasCreator$"
                 },
                 "identifier": "object",
-                "predicate": "http://localhost:3000/internal/commentsFragmentation",
-                "link": "http://localhost:3000/internal/FragmentationCreationDate"
+                "predicate": "https://solidbench.eriador.io/internal/commentsFragmentation",
+                "link": "https://solidbench.eriador.io/internal/FragmentationCreationDate"
               }
             },
             {
@@ -466,7 +466,7 @@
       "matcher": {
         "@type": "QuadMatcherComponent",
         "component": "subject",
-        "regex": "^http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/",
+        "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/",
         "probability": 0.2
       },
       "subject": {
@@ -484,7 +484,7 @@
       "graph": {
         "@type": "TermTemplateRegexNamedNode",
         "component": "subject",
-        "regex": "^(http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/).*",
+        "regex": "^(https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/).*",
         "replacement": "$1"
       }
     }
@@ -507,7 +507,8 @@
         "outputFormat": "application/n-quads",
         "fileExtension": ".nq",
         "iriToPath": {
-          "^http:\\/\\/": "out-fragments/http/"
+          "^http:\\/\\/": "out-fragments/http/",
+          "^https:\\/\\/": "out-fragments/https/"
         }
       },
       {
@@ -515,7 +516,7 @@
         "filter": {
           "@type": "QuadMatcherComponent",
           "component": "graph",
-          "regex": "^http:\\/\\/localhost:3000\\/pods\\/[0-9]+\\/"
+          "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/"
         },
         "sink": {
           "@type": "QuadSinkFile",
@@ -523,7 +524,7 @@
           "outputFormat": "application/n-quads",
           "fileExtension": ".nq",
           "iriToPath": {
-            "^.*": "out-fragments/http/localhost_3004/data"
+            "^.*": "out-fragments/https/sparql.solidbench.eriador.io/data"
           }
         }
       },
