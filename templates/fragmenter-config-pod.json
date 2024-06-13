@@ -467,7 +467,7 @@
       "matcher": {
         "@type": "QuadMatcherComponent",
         "component": "subject",
-        "regex": "^https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/",
+        "regex": "^(https:\\/\\/pods.solidbench.eriador.io\\/[0-9]+\\/)",
         "probability": 0.2
       },
       "subject": {
