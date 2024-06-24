@@ -613,7 +613,7 @@
                 "@type": "QuadSinkFile",
                 "log": true,
                 "outputFormat": "application/n-triples",
-                "fileExtension": "$.nt",
+                "fileExtension": ".nt",
                 "iriToPath": {
                   "^http:\\/\\/": "out-fragments/http/"
                 }
