@@ -2,7 +2,7 @@
 
 FROM node:22-slim
 
-ADD https://github.com/surilindur/comunica.git#e9a8ec114a66679da51c1bf8a67309f4a10e4fd1 /opt/client
+ADD https://github.com/surilindur/comunica.git#038b10d51e9d84302bc0a33555339f080e986579 /opt/client
 
 WORKDIR /opt/client
 

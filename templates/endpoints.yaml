@@ -2,34 +2,34 @@ services:
   pods:
     image: solidproject/community-server:7
     environment:
-      CSS_LOGGING_LEVEL: info
+      CSS_LOGGING_LEVEL: error
       CSS_CONFIG: /tmp/config.json
-      CSS_PORT: 3000
+      CSS_SOCKET: /sockets/pods.sock
       CSS_BASE_URL: https://pods.solidbench.eriador.io
-    network_mode: host
     volumes:
+      - ./../../sockets:/sockets:rw
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/pods.solidbench.eriador.io:/data:ro
   ldbc:
     image: solidproject/community-server:7
     environment:
-      CSS_LOGGING_LEVEL: info
+      CSS_LOGGING_LEVEL: error
       CSS_CONFIG: /tmp/config.json
-      CSS_PORT: 3001
+      CSS_SOCKET: /sockets/ldbc.sock
       CSS_BASE_URL: https://ldbc.solidbench.eriador.io
-    network_mode: host
     volumes:
+      - ./../../sockets:/sockets:rw
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/ldbc.solidbench.eriador.io:/data:ro
   dbpedia:
     image: solidproject/community-server:7
     environment:
-      CSS_LOGGING_LEVEL: info
+      CSS_LOGGING_LEVEL: error
       CSS_CONFIG: /tmp/config.json
-      CSS_PORT: 3002
+      CSS_SOCKET: /sockets/dbpedia.sock
       CSS_BASE_URL: https://dbpedia.solidbench.eriador.io
-    network_mode: host
     volumes:
+      - ./../../sockets:/sockets:rw
       - ./server-config.json:/tmp/config.json:ro
       - ./../out-fragments/https/dbpedia.solidbench.eriador.io:/data:ro
   sparql:
@@ -38,7 +38,7 @@ services:
       network: host
       dockerfile: comunica.dockerfile
     entrypoint: node ./bin/http.js
-    command: --context /tmp/context.json --port 3003 --workers 1 --timeout 30
+    command: --context /tmp/context.json --port 3000 --workers 2 --timeout 30
     network_mode: host
     volumes:
       - ./../out-fragments/https/sparql.solidbench.eriador.io/data.nq:/opt/client/data.nq:ro
