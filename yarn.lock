@@ -5201,8 +5201,9 @@ rdf-data-factory@^1.0.1, rdf-data-factory@^1.1.0, rdf-data-factory@^1.1.2:
   dependencies:
     "@rdfjs/types" "*"
 
-rdf-dataset-fragmenter@../rdf-dataset-fragmenter:
+rdf-dataset-fragmenter@surilindur/rdf-dataset-fragmenter.js#5adabf47deb003ba59d721bf01082c1bcb345e8a:
   version "2.7.1"
+  resolved "https://codeload.github.com/surilindur/rdf-dataset-fragmenter.js/tar.gz/5adabf47deb003ba59d721bf01082c1bcb345e8a"
   dependencies:
     "@rdfjs/types" "*"
     "@types/async-lock" "^1.4.0"
