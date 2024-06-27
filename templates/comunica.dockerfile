@@ -2,11 +2,11 @@
 
 FROM node:22-slim
 
-ADD https://github.com/surilindur/comunica.git#038b10d51e9d84302bc0a33555339f080e986579 /opt/client
+ADD https://github.com/surilindur/comunica.git#3c86bdada82329f0fc7fb1ed803ba6dcb6a386b9 /opt/client
 
 WORKDIR /opt/client
 
-RUN corepack enable && yarn install --ignore-engines
+RUN corepack enable && yarn install --ignore-engines --production --frozen-lockfile
 
 WORKDIR /opt/client/engines/query-sparql-file
 
