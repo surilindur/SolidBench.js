@@ -6,7 +6,7 @@ ADD https://github.com/surilindur/comunica.git#3c86bdada82329f0fc7fb1ed803ba6dcb
 
 WORKDIR /opt/client
 
-RUN corepack enable && yarn install --ignore-engines --production --frozen-lockfile
+RUN corepack enable && yarn install --ignore-engines --frozen-lockfile
 
 WORKDIR /opt/client/engines/query-sparql-file
 
