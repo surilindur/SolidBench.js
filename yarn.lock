@@ -7985,10 +7985,9 @@ rdf-data-factory@^1.0.1, rdf-data-factory@^1.1.0, rdf-data-factory@^1.1.1, rdf-d
   dependencies:
     "@rdfjs/types" "*"
 
-rdf-dataset-fragmenter@^2.8.0:
+rdf-dataset-fragmenter@surilindur/rdf-dataset-fragmenter.js#feat/quadmatchertermvalue:
   version "2.8.0"
-  resolved "https://registry.yarnpkg.com/rdf-dataset-fragmenter/-/rdf-dataset-fragmenter-2.8.0.tgz#4c0df63080c088b52efc8a4ef2a57f607cdaec9f"
-  integrity sha512-iOlzujYrg/ACpaRxbmpjPhb4OsoeMQkrp114iH1kWf/hSeWoHrSpCmhrOlv50bvWTPVoXbPeN/AtwFHn2iF+Xg==
+  resolved "https://codeload.github.com/surilindur/rdf-dataset-fragmenter.js/tar.gz/b370ce9be3bce863e8b84124d41edf885be466f3"
   dependencies:
     "@rdfjs/types" "*"
     "@types/async-lock" "^1.4.0"
