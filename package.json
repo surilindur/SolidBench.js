@@ -39,7 +39,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint .",
-    "postinstall: "yarn run build",
+    "postinstall": "yarn run build",
     "prepare": "husky",
     "version": "manual-git-changelog onversion"
   },
